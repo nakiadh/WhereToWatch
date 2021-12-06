@@ -1,0 +1,50 @@
+@page
+@model ServicesModel
+
+@{
+    ViewData["Title"] = "Streaming Services";
+}
+
+<h1>Streaming Services</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Service[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service[0].WebAddress)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Service) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WebAddress)
+            </td>
+            <td>
+                @foreach (var show in item.ShowService)
+                {
+                    @show.Show.Title <br />
+                }
+                @if (item.ShowService.Count == 0)
+                {
+                    @:No Shows Found
+                }
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ServiceId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ServiceId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ServiceId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
