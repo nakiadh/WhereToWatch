@@ -22,7 +22,7 @@ namespace WhereToWatch.Pages.Shows
 
         public async Task OnGetAsync()
         {
-            Show = await _context.Show.ToListAsync();
+            Show = await _context.Show.Include(s => s.ShowService).ThenInclude(ss => ss.Service).ToListAsync();
         }
     }
 }

@@ -50,6 +50,16 @@
                 @Html.DisplayFor(modelItem => item.Rating)
             </td>
             <td>
+                @foreach (var service in item.ShowService)
+                {
+                    @service.Service.Name <br />
+                }
+                @if (item.ShowService.Count == 0)
+                {
+                    @:Not available on any streaming services
+                }
+            </td>
+            <td>
                 <a asp-page="./Edit" asp-route-id="@item.ShowId">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ShowId">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.ShowId">Delete</a>

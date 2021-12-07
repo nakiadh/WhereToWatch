@@ -9,8 +9,8 @@ using WhereToWatch.Models;
 namespace WhereToWatch.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20211205210905_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20211207013128_NewMigration")]
+    partial class NewMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
