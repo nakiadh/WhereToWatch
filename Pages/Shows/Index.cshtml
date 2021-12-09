@@ -23,13 +23,13 @@
     <thead>
         <tr>
             <th>
-                <a asp-page="./Index" asp-route-sortOrder="@Model.TitleSortAsc"
+                <a asp-page="./Index" asp-route-sortOrder="@Model.TitleSort"
                 asp-route-currentFilter="@Model.CurrentFilter">
                  @Html.DisplayNameFor(model => model.Show[0].Title)
                 </a>
             </th>
             <th>
-                <a asp-page="./Index" asp-route-sortOrder="@Model.DateSortAsc"
+                <a asp-page="./Index" asp-route-sortOrder="@Model.DateSort"
                 asp-route-currentFilters="@Model.CurrentFilter">
                 @Html.DisplayNameFor(model => model.Show[0].ReleaseDate)
                 </a>

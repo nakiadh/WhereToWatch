@@ -28,8 +28,8 @@ namespace WhereToWatch.Pages.Shows
         public PaginatedList<Show> Show { get;set; } 
         public IList<Service> Service {get; set;}
 
-        public string TitleSortAsc {get; set;}
-        public string DateSortAsc {get; set;}
+        public string TitleSort {get; set;}
+        public string DateSort {get; set;}
         public string CurrentFilter {get; set;}
 
         [BindProperty(SupportsGet = true)]
@@ -46,8 +46,8 @@ namespace WhereToWatch.Pages.Shows
         {
             
             CurrentSort = sortOrder;
-            TitleSortAsc = String.IsNullOrEmpty(sortOrder) ? "title_asc" : "";
-            DateSortAsc = sortOrder == "Date" ? "date_asc" : "Date";
+            TitleSort = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            DateSort = sortOrder == "Date" ? "date_desc" : "Date";
             
 
             if (searchString != null)
@@ -69,11 +69,17 @@ namespace WhereToWatch.Pages.Shows
             }
             switch (sortOrder)
             {
-                case "title_asc":
-                    shows = shows.OrderBy(s => s.Title);
+                case "title_desc":
+                    shows = shows.OrderByDescending(s => s.Title);
                     break;
-                case "date_asc":
+                case "Date":
                     shows = shows.OrderBy(s => s.ReleaseDate);
+                    break;
+                case "date_desc":
+                    shows = shows.OrderByDescending(s => s.ReleaseDate);
+                    break;
+                default:
+                    shows = shows.OrderBy(s => s.Title);
                     break;
             }
 
