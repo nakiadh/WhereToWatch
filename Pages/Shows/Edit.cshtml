@@ -40,6 +40,37 @@
                 <span asp-validation-for="Show.Rating" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <table>
+                        <tr>
+                            @{
+                                var check = "";
+                                int cnt = 0;
+                                foreach(var service in Model.Services)
+                                {
+                                    if (cnt % 3 == 0)
+                                    {
+                                        @:</tr><tr>
+                                    }
+                                
+                                check = "";
+                                if (Model.Show.ShowService.Any(ss => ss.ServiceId == service.ServiceId))
+                                {
+                                    check = "checked";
+                                }
+                                <td>
+                                    <input type="checkbox" name="selectedServices" value="@service.ServiceId" @check /> @service.Name  
+                                </td>                          
+                                cnt++;
+                            }
+                            @:</tr>
+                            }
+                            
+                        
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>

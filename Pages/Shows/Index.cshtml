@@ -10,14 +10,35 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+<form>
+    <p>
+        Find by title:
+        <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+        <input type = "submit" value="Search" class="btn btn-primary" /> |
+        <a asp-page="./Index">Back to full list</a> 
+    </p>
+</form>
+@* <form>
+    <select asp-for="CurrentSort" asp-items="Model.SortList">
+        <option value="">Sort by</option>
+    </select>
+    <button type="submit">Sort</button>
+</form> *@
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Show[0].Title)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.TitleSortAsc"
+                asp-route-currentFilter="@Model.CurrentFilter">
+                 @Html.DisplayNameFor(model => model.Show[0].Title)
+                </a>
             </th>
             <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.DateSortAsc"
+                asp-route-currentFilters="@Model.CurrentFilter">
                 @Html.DisplayNameFor(model => model.Show[0].ReleaseDate)
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Show[0].Type)
@@ -68,3 +89,36 @@
 }
     </tbody>
 </table>
+<hr />
+ @{
+    var prevDisabled = !Model.Show.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Show.HasNextPage ? "disabled" : "";
+
+    @* if (Model.PageNum <= 1)
+    {
+        prevDisabled = "disabled";
+    } *@
+
+} 
+
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Show.PageIndex - 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Show.PageIndex + 1)"
+   asp-route-currentFilter="@Model.CurrentFilter"
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>
+
+@* <nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item @prevDisabled"><a class="page-link" asp-page="./Index" asp-route-asp-route-PageNum="@(Model.PageNum - 1)">Previous</a></li>
+        <li class="page-item"><a class="page-link" asp-page="./Index" asp-route-PageNum="@(Model.PageNum + 1)">Next</a></li>
+    </ul>
+</nav> *@
