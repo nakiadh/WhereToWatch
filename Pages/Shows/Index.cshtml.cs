@@ -28,20 +28,14 @@ namespace WhereToWatch.Pages.Shows
         public PaginatedList<Show> Show { get;set; } 
         public IList<Service> Service {get; set;}
 
-        //[BindProperty(SupportsGet = true)]
-        //public int PageNum {get; set;} = 1;
-        //public int PageSize {get; set;} = 10;
-
         public string TitleSortAsc {get; set;}
-        public string TitleSortDesc {get; set;}
         public string DateSortAsc {get; set;}
-        public string DateSortDesc {get; set;}
         public string CurrentFilter {get; set;}
 
         [BindProperty(SupportsGet = true)]
         public string CurrentSort {get; set;}
         
-        public SelectList SortList {get; set;}
+        //public SelectList SortList {get; set;}
         
         [BindProperty(SupportsGet = true)]
         public string SearchString {get; set;}
@@ -53,9 +47,7 @@ namespace WhereToWatch.Pages.Shows
             
             CurrentSort = sortOrder;
             TitleSortAsc = String.IsNullOrEmpty(sortOrder) ? "title_asc" : "";
-           // TitleSortDesc = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
             DateSortAsc = sortOrder == "Date" ? "date_asc" : "Date";
-            //DateSortDesc = sortOrder == "Date" ? "date_desc" : "Date";
             
 
             if (searchString != null)
@@ -80,56 +72,10 @@ namespace WhereToWatch.Pages.Shows
                 case "title_asc":
                     shows = shows.OrderBy(s => s.Title);
                     break;
-                /* case "title_desc":
-                    shows = shows.OrderByDescending(s => s.Title);
-                    break; */
                 case "date_asc":
                     shows = shows.OrderBy(s => s.ReleaseDate);
                     break;
-                /* case "date_desc":
-                    shows = shows.OrderByDescending(s => s.ReleaseDate);
-                    break; */
             }
-
-
-            /* var shows = from x in _context.Show
-                select x;
-            if (!string.IsNullOrEmpty(SearchString))
-            {
-                shows = shows.Where(m => m.Title.Contains(SearchString));
-            }
-            
-
-            var query = _context.Show.Select(s => s);
-            List<SelectListItem> sortItems = new List<SelectListItem> {
-                new SelectListItem { Text = "Title Ascending", Value = "title_asc"},
-                new SelectListItem { Text = "Title Descending", Value = "title_desc"},
-                new SelectListItem { Text = "Release Date Ascending", Value = "date_asc"},
-                new SelectListItem { Text = "Release Date Descending", Value = "date_desc"}
-            };
-            SortList = new SelectList(sortItems, "Value", "Text", CurrentSort);
-
-            switch (CurrentSort)
-            {
-                case "title_asc":
-                    query = query.OrderBy(s => s.Title);
-                    break;
-
-                case "title_desc":
-                    query = query.OrderByDescending(s => s.Title);
-                    break;
-
-                case "date_asc":
-                    query = query.OrderBy(s => s.ReleaseDate);
-                    break;
-
-                case "date_desc":
-                    query = query.OrderByDescending(s => s.ReleaseDate);
-                    break;
-            } */
-            /* Show = await shows.ToListAsync();
-            Show = await _context.Show.Include(s => s.ShowService).ThenInclude(ss => ss.Service).ToListAsync();
-            Show = await query.Skip((PageNum-1)*PageSize).Take(PageSize).ToListAsync(); */
 
             var pageSize = Configuration.GetValue("PageSize", 4);
             Show = await PaginatedList<Show>.CreateAsync(shows.Include(s => s.ShowService).ThenInclude(ss => ss.Service).AsNoTracking(), pageIndex ?? 1, pageSize);

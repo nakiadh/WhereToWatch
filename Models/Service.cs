@@ -7,6 +7,7 @@ namespace WhereToWatch.Models
     public class Service
     {
         public int ServiceId {get; set;} // Primary Key
+        [Display(Name = "Service")]
         [Required]
         public string Name {get; set;}
         [Display(Name = "Web Address")]
